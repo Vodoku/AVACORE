@@ -2,18 +2,22 @@
 #                              Top-Level Settings 
 # ################################################################################
 
-# CMake version must be greater than 2.8.11 
+# CMake version must be greater than 3.1. Warn user if version is less than new
 # --------------------------------------------------------------------------------
-CMAKE_MINIMUM_REQUIRED(VERSION 2.8.11 FATAL_ERROR) 
+CMAKE_MINIMUM_REQUIRED(VERSION 3.1 FATAL_ERROR) 
+IF(NOT CMAKE_VERSION VERSION_LESS "3.4.0")
+    SET(BUILD_LANGUAGE CXX) 
+ELSE()
+    SET(BUILD_LANGUAGE C CXX) 
+ENDIF()
 
-# CMake project name 
+# CMake project name and specified language 
 # --------------------------------------------------------------------------------
-PROJECT(AVACORE)
+PROJECT(AVACORE ${BUILD_LANGUAGE})
 
 # Command Line Options 
 # --------------------------------------------------------------------------------
 OPTION(AVACORE_PRINT_MESSAGES "Print Messages" ON)
-# Packages 
 OPTION(INCLUDE_QT5_PACKAGES "Turn On QT5 Packages" ON) 
 
 # CMake Project version
@@ -30,7 +34,7 @@ STRING(CONCAT AVACORE_VERSION "${AVACORE_VERSION_MAJOR}."
 SET(CMAKE_INCLUDE_CURRENT_DIR ON) 
 SET(CMAKE_AUTOMOC ON) 
 IF(INCLUDE_QT5_PACKAGES) 
-    # Set the installation path of your QT libraries
+    # !IMPORTANT: Set the installation path of your QT libraries
     SET(CMAKE_PREFIX_PATH "C:\\Qt\\5.9.3\\winrt_x64_msvc2017")
 ENDIF(INCLUDE_QT5_PACKAGES)
 
@@ -82,13 +86,15 @@ IF(AVACORE_PRINT_MESSAGES)
     MESSAGE("-------------------------------------------------------------------")
     MESSAGE(STATUS "[STAGE: 0/${AVACORE_STAGES}] - Fetching Target Information") 
     MESSAGE("-------------------------------------------------------------------")
-    # System Information 
+    # System & Build Information 
     MESSAGE(STATUS "Operating System   =   ${CMAKE_SYSTEM_NAME}") 
     MESSAGE(STATUS "C/C++ Compiler     =   ${CMAKE_CXX_COMPILER_ID}") 
     MESSAGE(STATUS "CMake Version      =   ${CMAKE_VERSION}") 
     MESSAGE(STATUS "CMake Generator    =   ${CMAKE_GENERATOR}") 
     MESSAGE(STATUS "CMake Build Type   =   ${CMAKE_BUILD_TYPE_INIT}")
     MESSAGE(STATUS "System Processor   =   ${CMAKE_SYSTEM_PROCESSOR}")
+    MESSAGE(STATUS "Install Prefix     =   ${CMAKE_INSTALL_PREFIX}")
+    MESSAGE(STATUS "CMake Langauge     =   ${BUILD_LANGUAGE}")
     # Project Information 
     MESSAGE(STATUS "Project Name       =   ${CMAKE_PROJECT_NAME}")
     MESSAGE(STATUS "Binary Directory   =   ${CMAKE_BINARY_DIR}") 
