@@ -4,7 +4,7 @@
 #ifdef QT5_PACKAGES_FOUND
 #include <QApplication> 
 #include "window.h" 
-#else 
+#else // QT5_PACKAGES_FOUND
 #include "console.h"
 #endif // QT5_PACKAGES_FOUND 
 
