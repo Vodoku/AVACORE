@@ -10,6 +10,12 @@ CMAKE_MINIMUM_REQUIRED(VERSION 2.8.11 FATAL_ERROR)
 # --------------------------------------------------------------------------------
 PROJECT(AVACORE)
 
+# Command Line Options 
+# --------------------------------------------------------------------------------
+OPTION(AVACORE_PRINT_MESSAGES "Print Messages" ON)
+# Packages 
+OPTION(INCLUDE_QT5_PACKAGES "Turn On QT5 Packages" ON) 
+
 # CMake Project version
 # --------------------------------------------------------------------------------
 SET(AVACORE_VERSION_MAJOR 1)
@@ -23,6 +29,10 @@ STRING(CONCAT AVACORE_VERSION "${AVACORE_VERSION_MAJOR}."
 # --------------------------------------------------------------------------------
 SET(CMAKE_INCLUDE_CURRENT_DIR ON) 
 SET(CMAKE_AUTOMOC ON) 
+IF(INCLUDE_QT5_PACKAGES) 
+    # Set the installation path of your QT libraries
+    SET(CMAKE_PREFIX_PATH "C:\\Qt\\5.9.3\\winrt_x64_msvc2017")
+ENDIF(INCLUDE_QT5_PACKAGES)
 
 # CMake Build Formatting 
 # --------------------------------------------------------------------------------
@@ -38,10 +48,6 @@ SET(AVACORE_STAGES 6)
 #   ENDIF() 
 #   MESSAGE(STATUS "${LINE_BREAK}") 
 # ENDFUNCTION(PRINT_LINE_BREAK) 
-
-# Command Line Options 
-# --------------------------------------------------------------------------------
-OPTION(AVACORE_PRINT_MESSAGES "Print Messages" ON)
 
 # ################################################################################
 #                    Stage 1 of 6 - Set Target Information 
@@ -105,7 +111,7 @@ IF(AVACORE_PRINT_MESSAGES)
     MESSAGE("-------------------------------------------------------------------")
 ENDIF(AVACORE_PRINT_MESSAGES)
 
-IF(WIN32 OR UNIX) 
+IF(INCLUDE_QT5_PACKAGES) 
     # Find these Qt5 Packages
     SET(QT5_PACKAGES Qt5Core Qt5Gui Qt5Widgets) 
     IF(AVACORE_PRINT_MESSAGES) 
