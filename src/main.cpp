@@ -1,6 +1,5 @@
-#include <iostream> 
-#include <string> 
 #include "config.h"
+
 #ifdef QT5_PACKAGES_FOUND
 #include <QApplication> 
 #include "window.h" 
@@ -18,7 +17,11 @@ int main(int argc, char *argv[])
     widget.show(); 
     return application.exec(); 
 #else // QT_PACKAGES_FOUND 
-    
+    Console console; 
+    while(console.running()) 
+    {
+
+    }
     return 0; 
 #endif // QT_PACKAGES_FOUND 
 }
